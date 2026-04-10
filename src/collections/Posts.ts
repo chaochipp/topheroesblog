@@ -1,12 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
 import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  LinkFeature,
-  UnorderedListFeature,
-  OrderedListFeature,
   lexicalEditor,
   lexicalHTMLField,
 } from '@payloadcms/richtext-lexical'
@@ -148,17 +142,6 @@ export const Posts: CollectionConfig = {
         admin: {
           placeholder: 'Write your Top Heroes guide here...',
         },
-        features: ({ rootFeatures }) => [
-          ...rootFeatures,
-          FixedToolbarFeature(),
-          InlineToolbarFeature(),
-          HeadingFeature({
-            enabledHeadingSizes: ['h2', 'h3', 'h4'],
-          }),
-          UnorderedListFeature(),
-          OrderedListFeature(),
-          LinkFeature(),
-        ],
       }),
       validate: (value) =>
         (value && typeof value === 'object' && hasText(value as Parameters<typeof hasText>[0])) ||
