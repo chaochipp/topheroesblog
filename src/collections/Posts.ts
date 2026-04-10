@@ -1,9 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  lexicalEditor,
-  lexicalHTMLField,
-} from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { hasText } from '@payloadcms/richtext-lexical/shared'
 
 const formatSlug = (value: string) =>
@@ -147,10 +144,5 @@ export const Posts: CollectionConfig = {
         (value && typeof value === 'object' && hasText(value as Parameters<typeof hasText>[0])) ||
         'Content is required.',
     },
-    lexicalHTMLField({
-      htmlFieldName: 'contentHtml',
-      lexicalFieldName: 'content',
-      storeInDB: true,
-    }),
   ],
 }

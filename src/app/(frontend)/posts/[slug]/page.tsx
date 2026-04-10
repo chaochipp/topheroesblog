@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 
 import { getPostBySlug } from '@/lib/posts'
 import type { Media } from '@/payload-types'
@@ -79,10 +80,9 @@ export default async function PostPage({ params }: PageProps) {
           </div>
         ) : null}
 
-        <div
-          className="post-content"
-          dangerouslySetInnerHTML={{ __html: post.contentHtml ?? '' }}
-        />
+        <div className="post-content">
+          <RichText data={post.content} />
+        </div>
       </div>
     </article>
   )

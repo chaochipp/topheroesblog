@@ -197,7 +197,6 @@ export interface Post {
     };
     [k: string]: unknown;
   };
-  contentHtml?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -330,7 +329,6 @@ export interface PostsSelect<T extends boolean = true> {
   heroImage?: T;
   publishedAt?: T;
   content?: T;
-  contentHtml?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
