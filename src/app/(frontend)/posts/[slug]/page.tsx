@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 
 import { getPostBySlug } from '@/lib/posts'
-import type { Media } from '@/payload-types'
+import type { Media, Post } from '@/payload-types'
 
 type PageProps = {
   params: Promise<{
@@ -22,6 +22,13 @@ const formatDate = (value?: string | null) =>
 
 const getImage = (value: Media | number | null | undefined): Media | null =>
   value && typeof value === 'object' ? value : null
+
+const categoryLabels: Record<Post['categories'][number], string> = {
+  'beginner-guides': 'Beginner Guides',
+  'hero-builds': 'Hero Builds',
+  events: 'Events',
+  progression: 'Progression',
+}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
@@ -49,6 +56,9 @@ export default async function PostPage({ params }: PageProps) {
 
   const heroImage = getImage(post.heroImage)
   const publishedAt = formatDate(post.publishedAt)
+  const postLabel = post.categories?.length
+    ? post.categories.map((category) => categoryLabels[category]).join(' / ')
+    : 'Guide'
 
   return (
     <article className="blog-shell">
@@ -61,24 +71,10 @@ export default async function PostPage({ params }: PageProps) {
         </Link>
 
         <header className="post-header">
-          <p className="eyebrow">Blog Post</p>
+          <p className="eyebrow">{postLabel}</p>
           <h1>{post.title}</h1>
-          <p className="post-dek">{post.excerpt}</p>
           {publishedAt ? <p className="post-meta">{publishedAt}</p> : null}
         </header>
-
-        {heroImage?.url ? (
-          <div className="post-image">
-            <Image
-              alt={heroImage.alt}
-              className="post-image-tag"
-              height={heroImage.height ?? 900}
-              priority
-              src={heroImage.url}
-              width={heroImage.width ?? 1600}
-            />
-          </div>
-        ) : null}
 
         <div className="post-content">
           <RichText data={post.content} />
