@@ -2,7 +2,7 @@ import React from 'react'
 import './styles.css'
 
 export const metadata = {
-  description: 'A simple blog powered by Payload CMS and Cloudflare.',
+  description: 'Top Heroes guides, documentation, and progression notes.',
   title: 'Top Heroes Blog',
 }
 

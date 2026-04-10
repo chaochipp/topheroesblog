@@ -25,40 +25,65 @@ export default async function HomePage() {
 
       <div className="blog-page">
         <section className="hero">
-          <p className="eyebrow">Payload CMS Blog</p>
-          <h1>Write in Payload. Publish a clean, simple blog.</h1>
-          <p className="hero-copy">
-            Your posts are managed in the Payload admin with rich text editing, then rendered on
-            the frontend as a straightforward reading experience.
-          </p>
-          <div className="hero-actions">
-            <Link className="button button-solid" href="/admin">
-              Open admin
-            </Link>
-            <a
-              className="button button-ghost"
-              href="https://payloadcms.com/docs"
-              rel="noreferrer"
-              target="_blank"
-            >
-              Payload docs
-            </a>
+          <div className="hero-grid">
+            <div className="hero-copy-wrap">
+              <p className="eyebrow">Top Heroes Blog</p>
+              <h1>Top Heroes guides, documentation, and progression notes.</h1>
+              <p className="hero-copy">
+                A focused knowledge base for Top Heroes covering team builds, event notes, feature
+                explanations, and practical guides for new and mid-game players.
+              </p>
+              <div className="hero-actions">
+                <Link className="button button-solid" href="/admin">
+                  Open editor
+                </Link>
+                <a className="button button-ghost" href="#posts">
+                  Browse articles
+                </a>
+              </div>
+            </div>
+
+            <div className="hero-panel">
+              <p className="hero-panel-label">What you can publish</p>
+              <ul className="hero-topics">
+                <li>Event walkthroughs and patch notes</li>
+                <li>Hero tier lists and team synergy guides</li>
+                <li>Progression tips, mistakes, and account planning</li>
+              </ul>
+              <div className="hero-stats">
+                <div className="hero-stat">
+                  <span className="hero-stat-value">{posts.length}</span>
+                  <span className="hero-stat-label">Published articles</span>
+                </div>
+                <div className="hero-stat">
+                  <span className="hero-stat-value">Guides</span>
+                  <span className="hero-stat-label">Built for quick reference</span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="posts-section">
+        <section className="posts-section" id="posts">
           <div className="section-heading">
             <div>
-              <p className="eyebrow">Latest Posts</p>
-              <h2>Published writing</h2>
+              <p className="eyebrow">Knowledge Base</p>
+              <h2>Latest guides and references</h2>
             </div>
-            <p className="section-copy">{posts.length} post{posts.length === 1 ? '' : 's'}</p>
+            <p className="section-copy">{posts.length} article{posts.length === 1 ? '' : 's'}</p>
+          </div>
+
+          <div className="tag-row" aria-label="Content topics">
+            <span className="tag-pill">Beginner Guides</span>
+            <span className="tag-pill">Hero Builds</span>
+            <span className="tag-pill">Events</span>
+            <span className="tag-pill">Progression</span>
           </div>
 
           {posts.length === 0 ? (
             <div className="empty-state">
-              <p>No published posts yet.</p>
-              <p>Create one in the admin and publish it to see it here.</p>
+              <p>No published guides yet.</p>
+              <p>Start by adding your first Top Heroes article in the admin panel.</p>
             </div>
           ) : (
             <div className="post-grid">
@@ -84,7 +109,7 @@ export default async function HomePage() {
                       <h3>{post.title}</h3>
                       <p>{post.excerpt}</p>
                       <Link className="card-link" href={`/posts/${post.slug}`}>
-                        Read post
+                        Open guide
                       </Link>
                     </div>
                   </article>
