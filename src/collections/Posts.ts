@@ -20,6 +20,25 @@ const formatSlug = (value: string) =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
 
+const categoryOptions = [
+  {
+    label: 'Beginner Guides',
+    value: 'beginner-guides',
+  },
+  {
+    label: 'Hero Builds',
+    value: 'hero-builds',
+  },
+  {
+    label: 'Events',
+    value: 'events',
+  },
+  {
+    label: 'Progression',
+    value: 'progression',
+  },
+]
+
 export const Posts: CollectionConfig = {
   slug: 'posts',
   admin: {
@@ -96,6 +115,17 @@ export const Posts: CollectionConfig = {
       required: true,
       admin: {
         description: 'Short summary shown on the blog homepage.',
+      },
+    },
+    {
+      name: 'categories',
+      type: 'select',
+      hasMany: true,
+      required: true,
+      index: true,
+      options: categoryOptions,
+      admin: {
+        description: 'Use categories to group guides on the frontend.',
       },
     },
     {

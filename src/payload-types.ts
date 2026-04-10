@@ -176,6 +176,10 @@ export interface Post {
    * Short summary shown on the blog homepage.
    */
   excerpt: string;
+  /**
+   * Use categories to group guides on the frontend.
+   */
+  categories: ('beginner-guides' | 'hero-builds' | 'events' | 'progression')[];
   heroImage?: (number | null) | Media;
   publishedAt?: string | null;
   content: {
@@ -322,6 +326,7 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   excerpt?: T;
+  categories?: T;
   heroImage?: T;
   publishedAt?: T;
   content?: T;

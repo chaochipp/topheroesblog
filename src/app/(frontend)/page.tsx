@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { getPublishedPosts } from '@/lib/posts'
-import type { Media } from '@/payload-types'
+import type { Media, Post } from '@/payload-types'
 import './styles.css'
 
 const formatDate = (value?: string | null) =>
@@ -15,8 +15,18 @@ const formatDate = (value?: string | null) =>
 const getImage = (value: Media | number | null | undefined): Media | null =>
   value && typeof value === 'object' ? value : null
 
+const categoryLabels: Record<Post['categories'][number], string> = {
+  'beginner-guides': 'Beginner Guides',
+  'hero-builds': 'Hero Builds',
+  events: 'Events',
+  progression: 'Progression',
+}
+
 export default async function HomePage() {
   const posts = await getPublishedPosts()
+  const featuredCategories = Array.from(
+    new Set(posts.flatMap((post) => post.categories ?? [])),
+  ).slice(0, 4)
 
   return (
     <div className="blog-shell">
@@ -73,12 +83,15 @@ export default async function HomePage() {
             <p className="section-copy">{posts.length} article{posts.length === 1 ? '' : 's'}</p>
           </div>
 
-          <div className="tag-row" aria-label="Content topics">
-            <span className="tag-pill">Beginner Guides</span>
-            <span className="tag-pill">Hero Builds</span>
-            <span className="tag-pill">Events</span>
-            <span className="tag-pill">Progression</span>
-          </div>
+          {featuredCategories.length > 0 ? (
+            <div className="tag-row" aria-label="Content topics">
+              {featuredCategories.map((category) => (
+                <span className="tag-pill" key={category}>
+                  {categoryLabels[category]}
+                </span>
+              ))}
+            </div>
+          ) : null}
 
           {posts.length === 0 ? (
             <div className="empty-state">
@@ -106,6 +119,15 @@ export default async function HomePage() {
 
                     <div className="card-body">
                       <p className="card-meta">{formatDate(post.publishedAt)}</p>
+                      {post.categories?.length ? (
+                        <div className="card-tags" aria-label="Post categories">
+                          {post.categories.map((category) => (
+                            <span className="card-tag" key={category}>
+                              {categoryLabels[category]}
+                            </span>
+                          ))}
+                        </div>
+                      ) : null}
                       <h3>{post.title}</h3>
                       <p>{post.excerpt}</p>
                       <Link className="card-link" href={`/posts/${post.slug}`}>

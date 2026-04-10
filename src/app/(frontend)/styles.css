@@ -297,6 +297,25 @@ img {
   text-transform: uppercase;
 }
 
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.card-tag {
+  background: rgba(189, 95, 38, 0.09);
+  border: 1px solid rgba(189, 95, 38, 0.12);
+  border-radius: 999px;
+  color: var(--accent-dark);
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.38rem 0.58rem;
+  text-transform: uppercase;
+}
+
 .section-heading {
   align-items: end;
   display: flex;
