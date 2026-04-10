@@ -32,9 +32,9 @@ export default async function HomePage() {
             the frontend as a straightforward reading experience.
           </p>
           <div className="hero-actions">
-            <a className="button button-solid" href="/admin">
+            <Link className="button button-solid" href="/admin">
               Open admin
-            </a>
+            </Link>
             <a
               className="button button-ghost"
               href="https://payloadcms.com/docs"

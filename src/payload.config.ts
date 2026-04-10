@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { sqliteD1Adapter } from '@payloadcms/db-d1-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { buildConfig } from 'payload'
+import { buildConfig, type PayloadLogger } from 'payload'
 import { fileURLToPath } from 'url'
 import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
@@ -28,7 +28,18 @@ const createLog =
     }
   }
 
-const cloudflareLogger = {
+type CloudflareLogger = {
+  level: string
+  trace: ReturnType<typeof createLog>
+  debug: ReturnType<typeof createLog>
+  info: ReturnType<typeof createLog>
+  warn: ReturnType<typeof createLog>
+  error: ReturnType<typeof createLog>
+  fatal: ReturnType<typeof createLog>
+  silent: () => void
+}
+
+const cloudflareLogger: CloudflareLogger = {
   level: process.env.PAYLOAD_LOG_LEVEL || 'info',
   trace: createLog('trace', console.debug),
   debug: createLog('debug', console.debug),
@@ -37,7 +48,9 @@ const cloudflareLogger = {
   error: createLog('error', console.error),
   fatal: createLog('fatal', console.error),
   silent: () => {},
-} as any // Use PayloadLogger type when it's exported
+}
+
+const payloadLogger = cloudflareLogger as unknown as PayloadLogger
 
 const cloudflare =
   isCLI || !isProduction
@@ -58,7 +71,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: sqliteD1Adapter({ binding: cloudflare.env.D1 }),
-  logger: isProduction ? cloudflareLogger : undefined,
+  logger: isProduction ? payloadLogger : undefined,
   plugins: [
     r2Storage({
       bucket: cloudflare.env.R2,
