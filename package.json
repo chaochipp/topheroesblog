@@ -12,7 +12,7 @@
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --no-server-fast-refresh",
     "devsafe": "rm -rf .next && rm -rf .open-next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
-    "generate:types": "pnpm run generate:types:cloudflare && pnpm run generate:types:payload",
+    "generate:types": "pnpm run generate:types:cloudflare && pnpm run generate:types:payload && pnpm run generate:importmap",
     "generate:types:cloudflare": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "generate:types:payload": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "ii": "pnpm install --ignore-workspace",
